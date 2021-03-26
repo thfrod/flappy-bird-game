@@ -65,7 +65,7 @@ const planoDeFundo = {
 
 }
 
-
+// Teste Git rápido
 // [Bird] 
 const flappyBird = {
   spriteX: 0,
