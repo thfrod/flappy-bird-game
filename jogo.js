@@ -507,7 +507,15 @@ window.addEventListener('click', function(){
   if(telaAtiva.click){
     telaAtiva.click();
   }
+  
 });
 
+document.addEventListener('keyup', event => {
+  if (event.code === 'Space') {
+    if(telaAtiva.click){
+      telaAtiva.click();
+    }
+  }
+})
 mudaParaTela(telas.INICIO);
 loop();
