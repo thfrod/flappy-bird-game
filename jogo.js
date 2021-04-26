@@ -1,9 +1,16 @@
 console.log('[Thfrod] Flappy Bird');
 
-
+var recorde = 0;
 let frames = 0;
 const sprites = new Image();
 sprites.src = './sprites.png';
+
+
+const som_ponto = new Audio();
+som_ponto.src = './efeitos/ponto.wav'
+
+const som_pulo = new Audio();
+som_pulo.src = './efeitos/pulo.wav'
 
 const som_HIT = new Audio();
 som_HIT.src = './efeitos/hit.wav'
@@ -205,25 +212,45 @@ const mensagemGameOver = {
 
 //Moedas 
 const moeda = {
-  //if(bronze){
-  //  sX:49;
-  //  sY:122;
-  //},
-  //if(prata){
-  //  sX: 49;
-  //  sY: 77;
-  //},
-  sX: 49,
-  sY: 122,
+  trocaMoeda(){
+    if(globais.placar.pontuacao <= 10){
+      return { 
+        sX : 49,
+        sY : 122
+      }
+    }
+    if(globais.placar.pontuacao <= 30){
+      return { 
+        sX : 49,
+        sY : 77
+      }
+    }
+    if(globais.placar.pontuacao <= 50){
+      return { 
+        sX : 0,
+        sY : 122
+      }
+    }
+    
+    return { 
+      sX : 0,
+      sY : 77
+    }
+    
+  },
+  
+  
   largura:45,
   altura: 47,
   x: (canvas.width / 2)-85,
   y: 135,
 
   desenha(){
+    let posicao = moeda.trocaMoeda();
+
     contexto.drawImage(
       sprites, 
-      moeda.sX, moeda.sY,
+      posicao.sX, posicao.sY,
       moeda.largura, moeda.altura,
       moeda.x,moeda.y,
       moeda.largura,moeda.altura
@@ -296,7 +323,7 @@ function criaCanos(){
       const cabecaDoFlappy = globais.flappyBird.y;
       const peDoFlappy = globais.flappyBird.y + globais.flappyBird.altura;
 
-      if ((globais.flappyBird.x + globais.flappyBird.largura-5) >= par.x){
+      if ((globais.flappyBird.x + globais.flappyBird.largura -2) >= par.x){
         //console.log("Flappy bird bateu no cano")
 
         if(cabecaDoFlappy <= par.canoCeu.y){
@@ -314,7 +341,7 @@ function criaCanos(){
     atualiza(){
       const passou100Frames = frames % 100 === 0;
       if (passou100Frames){
-        console.log("Passou 100 frames")
+        //console.log("Passou 100 frames")
         canos.pares.push({
           x:canvas.width,
           y:-150 * (Math.random() + 1),
@@ -327,6 +354,7 @@ function criaCanos(){
         if(canos.temColisaoComOFlappyBird(par)){
           //console.log("Você perdeu!")
           som_HIT.play();
+          
           mudaParaTela(telas.GAME_OVER);
           
         }
@@ -349,7 +377,6 @@ function criaCanos(){
 function criaPlacar(){
   const placar = {
     pontuacao:0,
-    recorde:88,
     desenha(placarX = 10,placarY = 35){
       
       contexto.font = '35px "VT323"';
@@ -357,7 +384,7 @@ function criaPlacar(){
       contexto.fillStyle = "white";
       contexto.fillText(`${placar.pontuacao}`,canvas.width - placarX,placarY);
 
-      //contexto.fillText(`${placar.recorde}`,canvas.width - 70,189);
+      
     },
     limpar(){
       contexto.fillText('');
@@ -370,6 +397,7 @@ function criaPlacar(){
         
         if (prx_cano == pos_fb-1){
           placar.pontuacao +=1;
+          som_ponto.play();
         }
   
       }
@@ -428,6 +456,7 @@ const telas = {
     },
     click(){
       globais.flappyBird.pula();
+      som_pulo.play();
     },
     
     atualiza(){
@@ -443,6 +472,8 @@ const telas = {
       mensagemGameOver.desenha();
       moeda.desenha();
       globais.placar.desenha(70,149);
+      recorde = globais.placar.pontuacao >recorde ?  globais.placar.pontuacao :recorde;
+      contexto.fillText(`${recorde}`,canvas.width - 70,189);
     },
     atualiza(){},
     click(){
