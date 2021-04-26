@@ -1,6 +1,13 @@
 console.log('[Thfrod] Flappy Bird');
 
-var recorde = 0;
+
+try {
+  var recorde = localStorage.getItem("recorde-flappyBird");
+}catch{
+  var recorde = 0;
+  localStorage.setItem('recorde-flappyBird',recorde)
+}
+ 
 let frames = 0;
 const sprites = new Image();
 sprites.src = './sprites.png';
@@ -473,6 +480,7 @@ const telas = {
       moeda.desenha();
       globais.placar.desenha(70,149);
       recorde = globais.placar.pontuacao >recorde ?  globais.placar.pontuacao :recorde;
+      localStorage.setItem('recorde-flappyBird',recorde);
       contexto.fillText(`${recorde}`,canvas.width - 70,189);
     },
     atualiza(){},
