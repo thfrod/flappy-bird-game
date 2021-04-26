@@ -363,14 +363,17 @@ function criaPlacar(){
       contexto.fillText('');
     },
     atualiza(){
-      const intervaloDeFrames = 10;
-      const passouOIntervalo = frames % intervaloDeFrames === 0;
-      if(passouOIntervalo){
-
-        placar.pontuacao +=1;
+      if (frames > 110){
+        const largura = globais.canos.largura;
+        const prx_cano = Math.min(...globais.canos.pares.map((par) => par.x + largura));
+        const pos_fb = globais.flappyBird.x;
+        
+        if (prx_cano == pos_fb-1){
+          placar.pontuacao +=1;
+        }
+  
       }
-
-    },
+    }
   }
   return placar;
 }
