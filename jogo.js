@@ -203,6 +203,37 @@ const mensagemGameOver = {
   }
 }
 
+//Moedas 
+const moeda = {
+  //if(bronze){
+  //  sX:49;
+  //  sY:122;
+  //},
+  //if(prata){
+  //  sX: 49;
+  //  sY: 77;
+  //},
+  sX: 49,
+  sY: 122,
+  largura:45,
+  altura: 47,
+  x: (canvas.width / 2)-85,
+  y: 135,
+
+  desenha(){
+    contexto.drawImage(
+      sprites, 
+      moeda.sX, moeda.sY,
+      moeda.largura, moeda.altura,
+      moeda.x,moeda.y,
+      moeda.largura,moeda.altura
+
+    );
+  }
+};
+
+
+
 
 function criaCanos(){
   const canos = {
@@ -318,14 +349,21 @@ function criaCanos(){
 function criaPlacar(){
   const placar = {
     pontuacao:0,
-    desenha(){
+    recorde:88,
+    desenha(placarX = 10,placarY = 35){
+      
       contexto.font = '35px "VT323"';
       contexto.textAlign = 'right';
       contexto.fillStyle = "white";
-      contexto.fillText(`${placar.pontuacao}`,canvas.width - 10,35);
+      contexto.fillText(`${placar.pontuacao}`,canvas.width - placarX,placarY);
+
+      //contexto.fillText(`${placar.recorde}`,canvas.width - 70,189);
+    },
+    limpar(){
+      contexto.fillText('');
     },
     atualiza(){
-      const intervaloDeFrames = 220;
+      const intervaloDeFrames = 10;
       const passouOIntervalo = frames % intervaloDeFrames === 0;
       if(passouOIntervalo){
 
@@ -400,7 +438,8 @@ const telas = {
     inicializa(){},
     desenha(){
       mensagemGameOver.desenha();
-
+      moeda.desenha();
+      globais.placar.desenha(70,149);
     },
     atualiza(){},
     click(){
