@@ -406,7 +406,6 @@ function criaPlacar(){
           placar.pontuacao +=1;
           som_ponto.play();
         }
-  
       }
     }
   }
@@ -517,5 +516,7 @@ document.addEventListener('keyup', event => {
     }
   }
 })
+
+
 mudaParaTela(telas.INICIO);
 loop();
