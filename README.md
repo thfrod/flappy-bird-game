@@ -1,5 +1,8 @@
 # [The Flappy Bird](https://flappy-bird-game.vercel.app/)
 
+<img src="./preview.png" alt="">
+
+
 O projeto inteiro foi desenvolvido com JavaScript puro, Canvas API, conceitos de orientação a objeto.
 
 * A aplicação conta com um sistema de pontuação que salva e armazena o recorde do jogador no próprio browser através do **LocalStorage**. O progresso só é       perdido caso o usuário limpe o cache do navegador.
